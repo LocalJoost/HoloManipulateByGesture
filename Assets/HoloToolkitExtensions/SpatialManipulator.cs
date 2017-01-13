@@ -64,7 +64,7 @@ namespace LocalJoost.HoloToolkitExtensions
             }
         }
 
-        void Manipulate(Vector3 manipulationData)
+        public void Manipulate(Vector3 manipulationData)
         {
             switch (Mode)
             {
