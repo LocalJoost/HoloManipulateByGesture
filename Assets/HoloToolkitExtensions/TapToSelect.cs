@@ -1,8 +1,7 @@
 ﻿using HoloToolkit.Unity.InputModule;
-using LocalJoost.HoloToolkitExtensions;
 using UnityEngine;
 
-namespace Assets.HoloToolkitExtensions
+namespace LocalJoost.HoloToolkitExtensions
 {
     public class TapToSelect : MonoBehaviour, IInputClickHandler
     {
