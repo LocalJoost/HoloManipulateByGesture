@@ -1,6 +1,5 @@
-﻿using System.Runtime.InteropServices;
-using HoloToolkit.Unity;
-using HoloToolkit.Unity.InputModule;
+﻿using HoloToolkit.Unity.InputModule;
+using UnityEngine;
 
 namespace LocalJoost.HoloToolkitExtensions
 {
@@ -14,6 +13,15 @@ namespace LocalJoost.HoloToolkitExtensions
         public static new AppStateManager Instance
         {
             get { return (AppStateManager)BaseAppStateManager.Instance; }
+        }
+
+        protected override void ResetDeselectedObject(GameObject oldGameObject)
+        {
+            var manipulator = GetManipulator(oldGameObject);
+            if (manipulator != null)
+            {
+                manipulator.Mode = ManipulationMode.None;
+            }
         }
 
         public void OnManipulationUpdated(ManipulationEventData eventData)
@@ -39,6 +47,17 @@ namespace LocalJoost.HoloToolkitExtensions
 
         public void OnManipulationCanceled(ManipulationEventData eventData)
         {
+        }
+
+        protected SpatialManipulator GetManipulator(GameObject obj)
+        {
+            if (obj == null)
+            {
+                return null;
+            }
+            var manipulator = obj.GetComponent<SpatialManipulator>() ??
+                obj.GetComponentInChildren<SpatialManipulator>();
+            return manipulator;
         }
     }
 }

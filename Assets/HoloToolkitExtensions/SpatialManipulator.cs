@@ -3,7 +3,7 @@ using HoloToolkit.Unity.InputModule;
 
 namespace LocalJoost.HoloToolkitExtensions
 {
-    public class SpatialManipulator : MonoBehaviour, IManipulationHandler
+    public class SpatialManipulator : MonoBehaviour
     {
         public float MoveSpeed = 0.1f;
 
@@ -19,7 +19,6 @@ namespace LocalJoost.HoloToolkitExtensions
         void Start()
         {
             Mode = ManipulationMode.None;
-            InputManager.Instance.PushFallbackInputHandler(gameObject);
             if (CollisonDetector == null)
             {
                 CollisonDetector = gameObject.AddComponent<DefaultMappingCollisionDetector>();
