@@ -1,6 +1,5 @@
 ﻿using System;
 using HoloToolkit.Unity;
-using HoloToolkit.Unity.InputModule;
 using UnityEngine;
 
 namespace LocalJoost.HoloToolkitExtensions

@@ -1,63 +1,61 @@
 ﻿using HoloToolkit.Unity.InputModule;
+using LocalJoost.HoloToolkitExtensions;
 using UnityEngine;
 
-namespace LocalJoost.HoloToolkitExtensions
+public class AppStateManager : BaseAppStateManager, IManipulationHandler
 {
-    public class AppStateManager : BaseAppStateManager, IManipulationHandler
+    void Start()
     {
-        void Start()
-        {
-            InputManager.Instance.PushFallbackInputHandler(gameObject);
-        }
+        InputManager.Instance.PushFallbackInputHandler(gameObject);
+    }
 
-        public static new AppStateManager Instance
-        {
-            get { return (AppStateManager)BaseAppStateManager.Instance; }
-        }
+    public static new AppStateManager Instance
+    {
+        get { return (AppStateManager)BaseAppStateManager.Instance; }
+    }
 
-        protected override void ResetDeselectedObject(GameObject oldGameObject)
+    protected override void ResetDeselectedObject(GameObject oldGameObject)
+    {
+        var manipulator = GetManipulator(oldGameObject);
+        if (manipulator != null)
         {
-            var manipulator = GetManipulator(oldGameObject);
+            manipulator.Mode = ManipulationMode.None;
+        }
+    }
+
+    public void OnManipulationUpdated(ManipulationEventData eventData)
+    {
+        if (SelectedGameObject != null)
+        {
+            var manipulator = GetManipulator(SelectedGameObject);
             if (manipulator != null)
             {
-                manipulator.Mode = ManipulationMode.None;
+                manipulator.Manipulate(eventData.CumulativeDelta);
             }
         }
+    }
 
-        public void OnManipulationUpdated(ManipulationEventData eventData)
+    public void OnManipulationStarted(ManipulationEventData eventData)
+    {
+
+    }
+
+    public void OnManipulationCompleted(ManipulationEventData eventData)
+    {
+    }
+
+    public void OnManipulationCanceled(ManipulationEventData eventData)
+    {
+    }
+
+    protected SpatialManipulator GetManipulator(GameObject obj)
+    {
+        if (obj == null)
         {
-            if (SelectedGameObject != null)
-            {
-                var manipulator = GetManipulator(SelectedGameObject);
-                if (manipulator != null)
-                {
-                    manipulator.Manipulate(eventData.CumulativeDelta);
-                }
-            }
+            return null;
         }
-
-        public void OnManipulationStarted(ManipulationEventData eventData)
-        {
-
-        }
-
-        public void OnManipulationCompleted(ManipulationEventData eventData)
-        {
-        }
-
-        public void OnManipulationCanceled(ManipulationEventData eventData)
-        {
-        }
-
-        protected SpatialManipulator GetManipulator(GameObject obj)
-        {
-            if (obj == null)
-            {
-                return null;
-            }
-            var manipulator = obj.GetComponent<SpatialManipulator>() ??
-                obj.GetComponentInChildren<SpatialManipulator>();
-            return manipulator;
-        }
+        var manipulator = obj.GetComponent<SpatialManipulator>() ??
+            obj.GetComponentInChildren<SpatialManipulator>();
+        return manipulator;
     }
 }

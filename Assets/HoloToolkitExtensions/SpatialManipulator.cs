@@ -81,7 +81,7 @@ namespace LocalJoost.HoloToolkitExtensions
 
         void Move(Vector3 manipulationData)
         {
-            var delta = manipulationData * MoveSpeed;
+            var delta = manipulationData*MoveSpeed;
             if (CollisonDetector.CheckIfCanMoveBy(delta))
             {
                 transform.localPosition += delta;
@@ -90,31 +90,17 @@ namespace LocalJoost.HoloToolkitExtensions
 
         void Rotate(Vector3 manipulationData)
         {
-           transform.RotateAround(transform.position, Vector3.up, -manipulationData.x * RotateSpeed);
-           transform.RotateAround(transform.position, Vector3.forward, -manipulationData.y * RotateSpeed);
-           transform.RotateAround(transform.position, Vector3.left, -manipulationData.z * RotateSpeed);
+            transform.RotateAround(transform.position, Camera.main.transform.up, 
+                -manipulationData.x * RotateSpeed);
+            transform.RotateAround(transform.position, Camera.main.transform.forward, 
+                manipulationData.y * RotateSpeed);
+            transform.RotateAround(transform.position, Camera.main.transform.right, 
+                manipulationData.z * RotateSpeed);
         }
 
         void Scale(Vector3 manipulationData)
         {
-            transform.localScale *= 1.0f - (manipulationData.z * ScaleSpeed);
-        }
-
-        public void OnManipulationStarted(ManipulationEventData eventData)
-        {
-        }
-
-        public void OnManipulationUpdated(ManipulationEventData eventData)
-        {
-            Manipulate(eventData.CumulativeDelta);
-        }
-
-        public void OnManipulationCompleted(ManipulationEventData eventData)
-        {
-        }
-
-        public void OnManipulationCanceled(ManipulationEventData eventData)
-        {
+            transform.localScale *= 1.0f - (manipulationData.z*ScaleSpeed);
         }
     }
 }
