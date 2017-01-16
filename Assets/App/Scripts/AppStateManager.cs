@@ -2,7 +2,8 @@
 using LocalJoost.HoloToolkitExtensions;
 using UnityEngine;
 
-public class AppStateManager : BaseAppStateManager, IManipulationHandler
+{
+    public class AppStateManager : BaseAppStateManager, IManipulationHandler
 {
     void Start()
     {
