@@ -2,12 +2,11 @@
 using LocalJoost.HoloToolkitExtensions;
 using UnityEngine;
 
-{
-    public class AppStateManager : BaseAppStateManager, IManipulationHandler
+public class AppStateManager : BaseAppStateManager, IManipulationHandler
 {
     void Start()
     {
-        InputManager.Instance.PushFallbackInputHandler(gameObject);
+        InputManager.Instance.AddGlobalListener(gameObject);
     }
 
     public static new AppStateManager Instance
